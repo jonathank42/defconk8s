@@ -13,3 +13,10 @@ curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --disable traefik --disa
 Step 2: ArgoCD
 helm repo add argo https://argoproj.github.io/argo-helm    
 helm install argocd argo/argo-cd -n argocd --create-namespace
+
+nginx ingress
+lets encrypt 
+pihole
+external-dns
+vaultwarden
+external-secrets

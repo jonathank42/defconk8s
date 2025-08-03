@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nginx
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/jonathank42/defconk8s.git
+      revision: HEAD
+      files:
+      - path: clusters/utility.json
+
+  template:
+    metadata:
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: /nginx
+      labels:
+        app.kubernetes.io/name: nginx
+      name: 'nginx.{{cluster.name}}'
+    spec:
+      project: shared
+      sources:
+      - repoURL: https://kubernetes.github.io/ingress-nginx
+        targetRevision: 4.13.0
+        chart: ingress-nginx
+        helm:
+          releaseName: ingress-nginx
+      - repoURL: https://github.com/jonathank42/defconk8s.git
+        targetRevision: HEAD
+      destination:
+        namespace: nginx
+        server: '{{cluster.name}}'  
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - ApplyOutOfSyncOnly=true
+        - preserveResourcesOnDeletion=true
+        - CreateNamespace=true
