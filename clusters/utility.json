@@ -1,0 +1,6 @@
+{
+  "cluster": {
+    "name": "utility",
+    "server": "https://kubernetes.default.svc"
+  }
+}

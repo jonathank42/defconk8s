@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: metallb
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/jonathank42/defconk8s.git
+      revision: HEAD
+      files:
+      - path: clusters/utility/*.json
+
+  template:
+    metadata:
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: /metallb
+      labels:
+        app.kubernetes.io/name: metallb
+      name: 'metallb.{{cluster.name}}'
+    spec:
+      project: shared
+      source:
+        repoURL: 'https://github.com/jonathank42/defconk8s.git'
+        targetRevision: HEAD
+        path: 'metallb/overlays/{{cluster.name}}'
+      destination:
+        namespace: metallb-system
+        server: '{{cluster.server}}'
+      syncPolicy:
+        syncOptions:
+        - ApplyOutOfSyncOnly=true
+        - preserveResourcesOnDeletion=true
+        - CreateNamespace=true
