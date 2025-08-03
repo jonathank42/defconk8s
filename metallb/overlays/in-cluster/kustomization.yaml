@@ -7,7 +7,7 @@ resources:
 patches:
 - patch: |-
     - op: replace
-      path: /spec/addresses
+      path: /spec/addresses/0
       value: 10.100.10.11-10.100.10.19
   target:
     kind: IPAddressPool
