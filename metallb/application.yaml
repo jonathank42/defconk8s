@@ -9,7 +9,7 @@ spec:
       repoURL: https://github.com/jonathank42/defconk8s.git
       revision: HEAD
       files:
-      - path: clusters/utility/*.json
+      - path: clusters/utility.json
 
   template:
     metadata:
