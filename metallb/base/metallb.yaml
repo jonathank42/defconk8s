@@ -1,15 +1,4 @@
 apiVersion: metallb.io/v1beta1
-kind: IPAddressPool
-metadata:
-  name: first-pool
-  namespace: metallb-system
-spec:
-  addresses:
-  - 0.0.0.0-0.0.0.0
-
----
-
-apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
   name: ippool
@@ -17,3 +6,14 @@ metadata:
 spec:
   ipAddressPools:
   - first-pool
+
+---  
+
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: first-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 0.0.0.0-0.0.0.0
